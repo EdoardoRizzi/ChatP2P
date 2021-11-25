@@ -17,6 +17,7 @@ public class ChatP2P {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println("Prova git");
+        String prova = "";
     }
     
 }
