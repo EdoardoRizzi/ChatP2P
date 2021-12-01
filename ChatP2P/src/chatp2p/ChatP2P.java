@@ -25,7 +25,8 @@ public class ChatP2P {
             ThreadAscolto ta = new ThreadAscolto(d);
             ThreadInvio ti = new ThreadInvio(d);
             ThreadGestioneMessaggio tgm = new ThreadGestioneMessaggio(d);
-            ThreadGrafica tg = new ThreadGrafica();
+            ThreadGrafica tg = new ThreadGrafica(d);
+            FramChat fc = new FramChat(d);
 
             ta.start();
             ti.start();

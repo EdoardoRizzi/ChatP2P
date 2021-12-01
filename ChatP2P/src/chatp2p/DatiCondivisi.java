@@ -29,6 +29,8 @@ public class DatiCondivisi {
 
     private String DestinationIP;
     private String SourceIP;
+    
+    FramChat frame;
 
     //OGGETTI PER SINCRONIZZAZIONE
     //oggetto per la lista MessaggiInviati

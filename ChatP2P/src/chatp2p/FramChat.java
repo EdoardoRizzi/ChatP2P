@@ -5,9 +5,11 @@
  */
 package chatp2p;
 
+import static java.lang.Thread.sleep;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -18,8 +20,12 @@ public class FramChat extends javax.swing.JFrame {
     /**
      * Creates new form FramChat
      */
-    public FramChat() {
+    DatiCondivisi dati;
+
+    public FramChat(DatiCondivisi d) {
         initComponents();
+        this.dati = d;
+        dati.frame = this;
     }
 
     /**
@@ -125,13 +131,13 @@ public class FramChat extends javax.swing.JFrame {
 
     private void btnChiudiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiudiActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnChiudiActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws InterruptedException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -154,12 +160,26 @@ public class FramChat extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(FramChat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+        DatiCondivisi dati = new DatiCondivisi();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FramChat().setVisible(true);
+                new FramChat(dati).setVisible(true);
+            }
+        });
+         while(dati.frame==null )
+        {
+            //OTTIMIZZABILE! aspetto che venga settata dal form
+            sleep(1);
+        }
 
+    }
+    
+    public void SetTxt(String s){
+          SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+               //Codice da eseguire nel Thread grafico
+               txtAVisualizza.setText(s);
             }
         });
     }
