@@ -50,18 +50,4 @@ public class ThreadAscolto extends Thread {
 
         System.out.println(messaggioRicevuto);
     }
-
-    public void Invia(String risposta) throws IOException {
-        
-        byte[] responseBuffer = risposta.getBytes();
-
-        DatagramPacket responsePacket = new DatagramPacket(responseBuffer, responseBuffer.length);
-
-        responsePacket.setAddress(packet.getAddress());
-
-        responsePacket.setPort(packet.getPort());
-
-        server.send(responsePacket);
-
-    }
 }
