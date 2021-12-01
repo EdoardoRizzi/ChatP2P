@@ -9,6 +9,6 @@ package chatp2p;
  *
  * @author 39334
  */
-public class ThreadGrafica {
+public class ThreadGrafica extends Thread{
     
 }

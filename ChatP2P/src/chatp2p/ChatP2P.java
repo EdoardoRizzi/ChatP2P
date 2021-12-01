@@ -5,6 +5,10 @@
  */
 package chatp2p;
 
+import java.net.SocketException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author 39334
@@ -16,8 +20,20 @@ public class ChatP2P {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("Prova git");
-        String prova = "";
+        DatiCondivisi d = new DatiCondivisi();
+        try {
+            ThreadAscolto ta = new ThreadAscolto(d);
+            ThreadInvio ti = new ThreadInvio(d);
+            ThreadGestioneMessaggio tgm = new ThreadGestioneMessaggio(d);
+            ThreadGrafica tg = new ThreadGrafica();
+
+            ta.start();
+            ti.start();
+            tgm.start();
+            tg.start();
+        } catch (SocketException ex) {
+            Logger.getLogger(FramChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
