@@ -18,14 +18,16 @@ import java.util.logging.Logger;
  */
 public class ThreadAscolto extends Thread {
 
+    private DatiCondivisi dati;
     private DatagramSocket server;
     private byte[] buffer;
     DatagramPacket packet;
 
-    public ThreadAscolto() throws SocketException {
+    public ThreadAscolto(DatiCondivisi d) throws SocketException {
         server = new DatagramSocket(12345);
         buffer = new byte[1500];
         packet = new DatagramPacket(buffer, buffer.length);
+        this.dati = d;
     }
     
     public void Run(){
@@ -47,7 +49,7 @@ public class ThreadAscolto extends Thread {
         byte[] dataReceived = packet.getData(); // copia del buffer dichiarato sopra
 
         String messaggioRicevuto = new String(dataReceived, 0, packet.getLength());
-
-        System.out.println(messaggioRicevuto);
+        
+        dati.AggiungiAMessaggiRicevuti(messaggioRicevuto);
     }
 }
