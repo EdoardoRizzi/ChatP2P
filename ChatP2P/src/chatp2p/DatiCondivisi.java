@@ -59,5 +59,41 @@ public class DatiCondivisi {
         this.syncAckConnessione = new Object();
         this.syncRichiestaConnessione = new Object();
     }
-
+    
+    public void AggiungiAMessaggiInviati(String s){
+        synchronized(InvioMessaggio){
+            MessaggioInviati.add(s);
+        }
+    }
+    
+    public void AggiungiAMessaggiRicevuti(String s){
+        synchronized(RiceviMessaggio){
+            MessaggiRicevuti.add(s);
+        }
+    }
+    
+    //restituisce il messaggio nella posizione voluta
+    public String getInvia(int pos){
+        synchronized(InvioMessaggio){
+            return MessaggioInviati.get(pos).toString();
+        }
+    }
+    //restituisce il messaggio nella posizione voluta
+    public String getRicevuti(int pos){
+        synchronized(RiceviMessaggio){
+            return MessaggiRicevuti.get(pos).toString();
+        }
+    }
+    //restituisce la dimensione dell'array
+    public int SizeOfMessaggioInviati(){
+        synchronized(InvioMessaggio){
+            return MessaggioInviati.size();
+        }
+    }
+    //restituisce la dimensione dell'array
+    public int SizeOfMessaggiRicevuti(){
+        synchronized(RiceviMessaggio){
+            return MessaggiRicevuti.size();
+        }
+    }
 }
