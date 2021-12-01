@@ -39,6 +39,8 @@ public class DatiCondivisi {
     private final Object syncInAttesaDiConnessione;
     private final Object syncAckConnessione;
     private final Object syncRichiestaConnessione;
+    private final Object syncDestinationIP;
+    private final Object syncSourceIP;
 
     public DatiCondivisi() {
         this.MessaggioInviati = new ArrayList<String>();
@@ -58,6 +60,8 @@ public class DatiCondivisi {
         this.syncInAttesaDiConnessione = new Object();
         this.syncAckConnessione = new Object();
         this.syncRichiestaConnessione = new Object();
+        this.syncDestinationIP = new Object();
+        this.syncSourceIP = new Object();
     }
     
     public void AggiungiAMessaggiInviati(String s){
@@ -94,6 +98,78 @@ public class DatiCondivisi {
     public int SizeOfMessaggiRicevuti(){
         synchronized(RiceviMessaggio){
             return MessaggiRicevuti.size();
+        }
+    }
+
+    public boolean isConnesso() {
+        synchronized(syncConnesso){
+            return Connesso;
+        }  
+    }
+
+    public void setConnesso(boolean Connesso) {
+        synchronized(syncConnesso){
+            this.Connesso = Connesso;
+        }
+    }
+
+    public boolean isInAttesaDiConnessione() {
+        synchronized(syncInAttesaDiConnessione){
+            return InAttesaDiConnessione;
+        }
+    }
+
+    public void setInAttesaDiConnessione(boolean InAttesaDiConnessione) {
+        synchronized(syncInAttesaDiConnessione){
+            this.InAttesaDiConnessione = InAttesaDiConnessione;
+        }
+    }
+
+    public boolean isAckConnessione() {
+        synchronized(syncAckConnessione){
+            return AckConnessione;
+        }
+    }
+
+    public void setAckConnessione(boolean AckConnessione) {
+        synchronized(syncAckConnessione){
+            this.AckConnessione = AckConnessione;
+        }
+    }
+
+    public boolean isRichiestaConnessione() {
+        synchronized(syncRichiestaConnessione){
+            return RichiestaConnessione;
+        }
+    }
+
+    public void setRichiestaConnessione(boolean RichiestaConnessione) {
+        synchronized(syncRichiestaConnessione){
+            this.RichiestaConnessione = RichiestaConnessione;
+        }
+    }
+
+    public String getDestinationIP() {
+        synchronized(syncDestinationIP){
+            return DestinationIP;
+        }
+    }
+
+    public void setDestinationIP(String DestinationIP) {
+        synchronized(syncDestinationIP){
+              this.DestinationIP = DestinationIP;
+        }
+    }
+
+    public String getSourceIP() {
+        synchronized(syncSourceIP){
+            return SourceIP;
+        }
+    }
+
+    public void setSourceIP(String SourceIP) {
+        synchronized(syncSourceIP){
+            this.SourceIP = SourceIP;
         }
     }
 }
