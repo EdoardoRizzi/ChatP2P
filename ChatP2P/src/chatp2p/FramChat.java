@@ -7,6 +7,8 @@ package chatp2p;
 
 import static java.lang.Thread.sleep;
 import java.net.SocketException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
@@ -38,8 +40,6 @@ public class FramChat extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtNome = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAVisualizza = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -47,12 +47,12 @@ public class FramChat extends javax.swing.JFrame {
         btnInvia = new javax.swing.JButton();
         btnCollegati = new javax.swing.JButton();
         btnChiudi = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtIP = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Chat con:");
-
-        jScrollPane1.setViewportView(txtNome);
 
         txtAVisualizza.setColumns(20);
         txtAVisualizza.setRows(5);
@@ -70,6 +70,11 @@ public class FramChat extends javax.swing.JFrame {
         });
 
         btnCollegati.setText("collegati");
+        btnCollegati.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCollegatiActionPerformed(evt);
+            }
+        });
 
         btnChiudi.setText("ESCI");
         btnChiudi.addActionListener(new java.awt.event.ActionListener() {
@@ -78,25 +83,32 @@ public class FramChat extends javax.swing.JFrame {
             }
         });
 
+        txtIP.setColumns(20);
+        txtIP.setRows(5);
+        jScrollPane4.setViewportView(txtIP);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCollegati)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addComponent(btnCollegati))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(12, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(80, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnInvia)
                 .addGap(36, 36, 36)
                 .addComponent(btnChiudi, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -105,12 +117,16 @@ public class FramChat extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(btnCollegati))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCollegati)
+                            .addComponent(jLabel1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -118,7 +134,7 @@ public class FramChat extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnChiudi)
                     .addComponent(btnInvia))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -126,13 +142,22 @@ public class FramChat extends javax.swing.JFrame {
 
     private void btnInviaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInviaActionPerformed
         // TODO add your handling code here:
-        
+        dati.AggiungiAMessaggiInviati("m;" + txtAInvia.getText());
     }//GEN-LAST:event_btnInviaActionPerformed
 
     private void btnChiudiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiudiActionPerformed
         // TODO add your handling code here:
-
+        dati.AggiungiAMessaggiInviati("d;");
+        dati.setConnesso(false);
     }//GEN-LAST:event_btnChiudiActionPerformed
+
+    private void btnCollegatiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCollegatiActionPerformed
+        // TODO add your handling code here:
+        dati.AggiungiAMessaggiInviati("c;");
+        dati.setDestinationIP(txtIP.toString());
+        dati.setInAttesaDiConnessione(true);
+        
+    }//GEN-LAST:event_btnCollegatiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,11 +214,11 @@ public class FramChat extends javax.swing.JFrame {
     private javax.swing.JButton btnCollegati;
     private javax.swing.JButton btnInvia;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea txtAInvia;
     private javax.swing.JTextArea txtAVisualizza;
-    private javax.swing.JTextPane txtNome;
+    private javax.swing.JTextArea txtIP;
     // End of variables declaration//GEN-END:variables
 }
